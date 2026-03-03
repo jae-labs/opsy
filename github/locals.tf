@@ -22,6 +22,7 @@ locals {
       has_issues     = true
       has_wiki       = false
       default_branch = "main"
+      topics         = ["iac", "terraform"]
       team_access    = { "Maintainers" = "admin" }
       branch_protection = {
         required_reviews                = 1
@@ -66,6 +67,18 @@ locals {
       delete_branch_on_merge = true
       default_branch         = "main"
       topics                 = ["ai", "cli", "flashcards", "flashcards-cli", "golang", "llama", "ollama", "sqlite"]
+      team_access            = { "Maintainers" = "admin" }
+      branch_protection      = null
+    }
+    "keymaker" = {
+      description            = "A Slack Bot written in GoLang that provisions resources, manages access, and automates workflows across various platforms via Terraform."
+      visibility             = "public"
+      has_issues             = true
+      allow_auto_merge       = true
+      allow_update_branch    = true
+      delete_branch_on_merge = true
+      default_branch         = "main"
+      topics                 = ["slack-bot", "golang", "iac", "support-bot", "provisioning", "access-management", "workflow-automation"]
       team_access            = { "Maintainers" = "admin" }
       branch_protection      = null
     }
