@@ -9,33 +9,10 @@ on:
 
 jobs:
   apply:
-    runs-on: ubuntu-latest
-    environment: production
-    defaults:
-      run:
-        working-directory: github
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: "~> 1.5"
-
-      - name: GCP credentials
-        run: echo '${{ secrets.GCP_SA_KEY }}' > /tmp/gcp-sa-key.json
-
-      - name: Terraform init
-        run: terraform init
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-sa-key.json
-
-      - name: Terraform apply
-        run: terraform apply -auto-approve
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-          GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-sa-key.json
-
-      - name: Cleanup credentials
-        if: always()
-        run: rm -f /tmp/gcp-sa-key.json
+    uses: ./.github/workflows/terraform-reusable.yml
+    with:
+      working-directory: github
+      provider-token-name: GITHUB_TOKEN
+    secrets:
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+      PROVIDER_TOKEN: ${{ secrets.GH_PAT }}

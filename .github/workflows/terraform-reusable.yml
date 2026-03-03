@@ -1,0 +1,51 @@
+name: "Terraform Apply"
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        required: true
+        type: string
+      provider-token-name:
+        required: true
+        type: string
+        description: "env var name for the provider token (e.g. GITHUB_TOKEN, DOPPLER_TOKEN)"
+    secrets:
+      GCP_SA_KEY:
+        required: true
+      PROVIDER_TOKEN:
+        required: true
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~> 1.5"
+
+      - name: GCP credentials
+        run: echo '${{ secrets.GCP_SA_KEY }}' > /tmp/gcp-sa-key.json
+
+      - name: Terraform init
+        run: terraform init
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-sa-key.json
+
+      - name: Terraform apply
+        run: |
+          export "${{ inputs.provider-token-name }}=${{ secrets.PROVIDER_TOKEN }}"
+          terraform apply -auto-approve
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-sa-key.json
+
+      - name: Cleanup credentials
+        if: always()
+        run: rm -f /tmp/gcp-sa-key.json

@@ -1,8 +1,11 @@
 variable "projects" {
   description = "map of Doppler project names to project config"
   type = map(object({
-    description  = string
-    environments = list(string)
+    description = string
+    environments = map(object({
+      name             = string
+      personal_configs = optional(bool, false)
+    }))
   }))
   default = {}
 }

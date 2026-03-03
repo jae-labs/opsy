@@ -3,11 +3,12 @@ locals {
   project_environments = {
     for entry in flatten([
       for project_name, project in var.projects : [
-        for env in project.environments : {
-          key          = "${project_name}:${env}"
+        for env_slug, env in project.environments : {
+          key          = "${project_name}:${env_slug}"
           project_name = project_name
-          env_slug     = env
-          env_name     = title(env)
+          env_slug     = env_slug
+          env_name     = env.name
+          env          = env
         }
       ]
     ]) : entry.key => entry
@@ -30,9 +31,10 @@ resource "doppler_project" "projects" {
 resource "doppler_environment" "envs" {
   for_each = local.project_environments
 
-  project = doppler_project.projects[each.value.project_name].name
-  slug    = each.value.env_slug
-  name    = each.value.env_name
+  project          = doppler_project.projects[each.value.project_name].name
+  slug             = each.value.env_slug
+  name             = each.value.env_name
+  personal_configs = each.value.env.personal_configs
 }
 
 resource "doppler_group" "groups" {

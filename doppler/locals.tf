@@ -1,31 +1,15 @@
 locals {
   projects = {
-    "api" = {
-      description  = "API service secrets"
-      environments = ["dev", "staging", "production"]
-    }
-    "infra" = {
-      description  = "Infrastructure secrets"
-      environments = ["dev", "production"]
+    "example-project" = {
+      description = "An example project with some sample secrets."
+      environments = {
+        "dev" = { name = "Development", personal_configs = true }
+        "stg" = { name = "Staging" }
+        "prd" = { name = "Production" }
+      }
     }
   }
 
-  groups = {
-    "engineering" = { description = "Engineering access group" }
-  }
-
-  project_access = [
-    {
-      project      = "api"
-      group        = "engineering"
-      role         = "collaborator"
-      environments = null
-    },
-    {
-      project      = "infra"
-      group        = "engineering"
-      role         = "viewer"
-      environments = null
-    },
-  ]
+  groups         = {}
+  project_access = []
 }
