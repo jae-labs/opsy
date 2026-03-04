@@ -124,7 +124,7 @@ locals {
     }
     "test" = {
       description      = "test"
-      visibility       = "private"
+      visibility       = "public"
       has_issues       = true
       default_branch   = "main"
       topics           = ["test"]
