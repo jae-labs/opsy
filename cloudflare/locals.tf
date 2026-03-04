@@ -105,6 +105,12 @@ locals {
         name    = "justanother.engineer"
         content = "v=spf1 include:zoho.com ~all"
       }
+      "testtest" = {
+        type    = "CNAME"
+        name    = "@"
+        content = "www.google.com"
+        proxied = false
+      }
     }
   }
 
