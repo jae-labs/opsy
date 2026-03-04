@@ -122,15 +122,6 @@ locals {
       team_access       = { "Maintainers" = "admin" }
       branch_protection = null
     }
-    "sandbox2" = {
-      description      = "test"
-      visibility       = "private"
-      has_issues       = true
-      default_branch   = "main"
-      topics           = ["test"]
-      team_access      = { "Maintainers" = "admin" }
-      branch_protection = null
-    }
   }
 
   org_settings = {
