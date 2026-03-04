@@ -122,15 +122,6 @@ locals {
       team_access       = { "Maintainers" = "admin" }
       branch_protection = null
     }
-    "test" = {
-      description      = "test"
-      visibility       = "public"
-      has_issues       = true
-      default_branch   = "main"
-      topics           = ["test"]
-      team_access      = { "Maintainers" = "admin" }
-      branch_protection = null
-    }
   }
 
   org_settings = {
