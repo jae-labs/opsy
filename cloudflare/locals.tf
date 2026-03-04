@@ -105,6 +105,12 @@ locals {
         name    = "justanother.engineer"
         content = "v=spf1 include:zoho.com ~all"
       }
+      "blabla" = {
+        type    = "A"
+        name    = "@"
+        content = "bla"
+        proxied = false
+      }
     }
   }
 
