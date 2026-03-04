@@ -107,7 +107,7 @@ locals {
       }
       "testtest-cname-ee833d" = {
         type    = "CNAME"
-        name    = "testtest"
+        name    = "testtest2"
         content = "www.google.com"
         proxied = false
       }
