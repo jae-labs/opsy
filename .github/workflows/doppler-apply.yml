@@ -1,0 +1,21 @@
+name: "Terraform Doppler Apply"
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "iac/terraform/doppler/**"
+      - "iac/terraform/modules/doppler/**"
+
+jobs:
+  apply:
+    uses: ./.github/workflows/terraform-reusable.yml
+    with:
+      module-path: iac/terraform/doppler
+      provider-token-name: DOPPLER_TOKEN
+    secrets:
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+      PROVIDER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}

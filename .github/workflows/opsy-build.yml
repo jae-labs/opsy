@@ -1,0 +1,27 @@
+name: "Opsy Build"
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+    paths: ["bot/slack/**"]
+  pull_request:
+    paths: ["bot/slack/**"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bot/slack
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # ratchet:actions/checkout@v6
+
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # ratchet:actions/setup-go@v5
+        with:
+          go-version-file: bot/slack/go.mod
+
+      - run: go build ./...
+      - run: go test ./...
