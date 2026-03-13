@@ -13,6 +13,7 @@ import (
 
 func main() {
 	logger := slog.New(slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{Level: slog.LevelInfo}))
+
 	slog.SetDefault(logger)
 
 	cfg, err := config.Load()
